@@ -58,14 +58,14 @@
     "id": 5,
     "category": "memes",
     "mode": "feed",
-    "type": "audio",
-    "media": "/media/music/turnaround.mp4",
-    "question": "Have you seen this in your feed?",
+    "type": "none",
+    "media": null,
+    "question": "Have often do you see dancing cats in your feed?",
     "options": [
-      { "text": "All over my feed", "exposureScore": 70 },
+      { "text": "Very often", "exposureScore": 70 },
       { "text": "A few times", "exposureScore": 50 },
-      { "text": "Vaguely familiar", "exposureScore": 30 },
-      { "text": "Never heard", "exposureScore": 0 }
+      { "text": "Rarely", "exposureScore": 30 },
+      { "text": "Never ", "exposureScore": 0 }
     ]
   },
   {
@@ -87,7 +87,7 @@
     "id": 7,
     "category": "music",
     "mode": "feed",
-    "type": "image",
+    "type": "video",
     "media": "/media/music/bdance.mp4",
     "question": "How often does this come to your feed?",
     "options": [
@@ -115,7 +115,7 @@
     "mode": "feed",
     "type": "none",
     "media": null,
-    "question": "Start camera, Ayappa! Heard this recently?",
+    "question": "Start camera, Ayyappa! Heard this recently?",
     "options": [
       { "text": "Yess", "exposureScore": 70 },
       { "text": "Nope", "exposureScore": 0 }
