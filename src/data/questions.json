@@ -3,14 +3,13 @@
     "id": 1,
     "category": "memes",
     "mode": "feed",
-    "type": "image",
-    "media": "/media/memes/q1_distracted_bf.jpg",
-    "question": "PLACEHOLDER QUESTION 1 (FEED - 4 OPTIONS)",
+    "type": "none",
+    "media": null,
+    "question": "Did you hear about the new name of Vaseline in your Instagram feed? ",
     "options": [
-      { "text": "OPTION A (VERY HIGH EXPOSURE)", "exposureScore": 70 },
-      { "text": "OPTION B (MODERATE EXPOSURE)", "exposureScore": 50 },
-      { "text": "OPTION C (VAGUE FAMILIARITY)", "exposureScore": 30 },
-      { "text": "OPTION D (NEVER SEEN THIS)", "exposureScore": 0 }
+      { "text": "OPTION A (ALL OVER MY FEED) ", "exposureScore": 70 },
+      { "text": "OPTION B (HEARD ABOUT IT) ", "exposureScore": 40 },
+      { "text": "OPTION C (NEVER HEARD)", "exposureScore": 0 }
     ]
   },
   {
@@ -18,13 +17,13 @@
     "category": "memes",
     "mode": "recognition",
     "type": "image",
-    "media": "/media/memes/q2_doge_buff.jpg",
-    "question": "PLACEHOLDER QUESTION 2 (RECOGNITION - 4 OPTIONS)",
+    "media": "/media/memes/tung.jpeg",
+    "question": "What is this character from Italian brainrot called?",
     "options": [
-      { "text": "OPTION A" },
-      { "text": "OPTION B (CORRECT)" },
-      { "text": "OPTION C" },
-      { "text": "OPTION D" }
+      { "text": "Ballerina Cappuccina" },
+      { "text": "Tung Tung Tung Sahur" },
+      { "text": "Tralalero Tralala" },
+      { "text": "Bombardiro Crocodilo" }
     ],
     "answer": 1
   },
@@ -32,61 +31,36 @@
     "id": 3,
     "category": "memes",
     "mode": "feed",
-    "type": "none",
-    "media": null,
-    "question": "PLACEHOLDER QUESTION 3 (FEED - 2 OPTIONS)",
+    "type": "image",
+    "media": "/media/memes/selfobs.jpeg",
+    "question": "Have you seen this self obsessed guy in your feed?",
     "options": [
       { "text": "OPTION A (I KNOW THIS / SEEN IT)", "exposureScore": 70 },
       { "text": "OPTION B (NEVER SEEN THIS)", "exposureScore": 0 }
     ]
   },
+
   {
     "id": 4,
-    "category": "movies",
-    "mode": "feed",
-    "type": "image",
-    "media": "/media/movies/q4_barbenheimer.jpg",
-    "question": "PLACEHOLDER QUESTION 4 (FEED - 3 OPTIONS)",
-    "options": [
-      { "text": "OPTION A (SEEN THIS EVERYWHERE)", "exposureScore": 70 },
-      { "text": "OPTION B (VAGUELY FAMILIAR)", "exposureScore": 40 },
-      { "text": "OPTION C (NEVER SEEN THIS)", "exposureScore": 0 }
-    ]
-  },
-  {
-    "id": 5,
-    "category": "movies",
+    "category": "memes",
     "mode": "recognition",
     "type": "none",
     "media": null,
-    "question": "PLACEHOLDER QUESTION 5 (RECOGNITION - 2 OPTIONS)",
+    "question": "______, what's this behavior?",
     "options": [
-      { "text": "OPTION A" },
-      { "text": "OPTION B (CORRECT)" }
-    ],
-    "answer": 1
-  },
-  {
-    "id": 6,
-    "category": "movies",
-    "mode": "recognition",
-    "type": "audio",
-    "media": "/media/movies/q6_inception_horn.wav",
-    "question": "PLACEHOLDER QUESTION 6 (RECOGNITION - 3 OPTIONS)",
-    "options": [
-      { "text": "OPTION A (CORRECT)" },
-      { "text": "OPTION B" },
-      { "text": "OPTION C" }
+      { "text": "Pooja" },
+      { "text": "Ashley" }
     ],
     "answer": 0
   },
+  
   {
-    "id": 7,
-    "category": "music",
+    "id": 5,
+    "category": "memes",
     "mode": "feed",
     "type": "audio",
-    "media": "/media/music/q7_rickroll.wav",
-    "question": "PLACEHOLDER QUESTION 7 (FEED - 4 OPTIONS)",
+    "media": "/media/music/turnaround.mp4",
+    "question": "Have you seen this in your feed?",
     "options": [
       { "text": "OPTION A (HEARD EVERYWHERE)", "exposureScore": 70 },
       { "text": "OPTION B (A FEW TIMES)", "exposureScore": 50 },
@@ -95,72 +69,68 @@
     ]
   },
   {
-    "id": 8,
-    "category": "music",
+    "id": 6,
+    "category": "memes",
     "mode": "recognition",
-    "type": "audio",
-    "media": "/media/music/q8_phonk.wav",
-    "question": "PLACEHOLDER QUESTION 8 (RECOGNITION - 4 OPTIONS)",
+    "type": "none",
+    "media": null,
+    "question": "Complete this meme : _______ follows my brother! ",
     "options": [
-      { "text": "OPTION A" },
-      { "text": "OPTION B (CORRECT)" },
-      { "text": "OPTION C" },
-      { "text": "OPTION D" }
+      { "text": "Money" },
+      { "text": "Disaster" },
+      { "text": "Opinions" },
+      { "text": "Fame" }
     ],
-    "answer": 1
+    "answer": 0
   },
   {
-    "id": 9,
+    "id": 7,
     "category": "music",
     "mode": "feed",
     "type": "image",
-    "media": "/media/music/q9_billie.jpg",
-    "question": "PLACEHOLDER QUESTION 9 (FEED - 3 OPTIONS)",
+    "media": "/media/music/bdance.mp4",
+    "question": "How often does this come to your feed?",
     "options": [
-      { "text": "OPTION A (ALL OVER MY FEED)", "exposureScore": 70 },
-      { "text": "OPTION B (SEEN A FEW TIMES)", "exposureScore": 35 },
-      { "text": "OPTION C (NEVER SEEN)", "exposureScore": 0 }
+      { "text": "Often", "exposureScore": 70 },
+      { "text": "Sometimes", "exposureScore": 35 },
+      { "text": "Rarely", "exposureScore": 0 }
     ]
   },
   {
-    "id": 10,
-    "category": "ai",
-    "mode": "recognition",
-    "type": "video",
-    "media": "/media/ai/q10_ai_spaghetti.mp4",
-    "question": "PLACEHOLDER QUESTION 10 (RECOGNITION - 3 OPTIONS)",
-    "options": [
-      { "text": "OPTION A" },
-      { "text": "OPTION B (CORRECT)" },
-      { "text": "OPTION C" }
-    ],
-    "answer": 1
-  },
-  {
-    "id": 11,
+    "id": 8,
     "category": "ai",
     "mode": "feed",
-    "type": "image",
-    "media": "/media/ai/q11_pope_puffer.jpg",
-    "question": "PLACEHOLDER QUESTION 11 (FEED - 4 OPTIONS)",
+    "type": "none",
+    "media": null,
+    "question": "Does your feed show AI generated stories with animals, vegetables and food as characters?",
     "options": [
-      { "text": "OPTION A (DEFINITELY SEEN THIS)", "exposureScore": 70 },
-      { "text": "OPTION B (SEEN IT A FEW TIMES)", "exposureScore": 50 },
-      { "text": "OPTION C (VAGUELY FAMILIAR)", "exposureScore": 30 },
+      { "text": "Always", "exposureScore": 70},
+      { "text": "Sometimes", "exposureScore": 30 },
+      { "text": "Never", "exposureScore": 0 }
+    ]
+  },
+  {
+    "id": 9,
+    "category": "movies",
+    "mode": "feed",
+    "type": "none",
+    "media": null,
+    "question": "Start camera, Ayappa! Heard this recently?",
+    "options": [
+      { "text": "OPTION A (YES, OF COURSE)", "exposureScore": 70 },
       { "text": "OPTION D (NEVER SEEN THIS)", "exposureScore": 0 }
     ]
   },
   {
-    "id": 12,
-    "category": "slang",
+    "id": 10,
+    "category": "memes",
     "mode": "recognition",
-    "type": "none",
-    "media": null,
-    "question": "PLACEHOLDER QUESTION 12 (RECOGNITION - 3 OPTIONS)",
+    "type": "image",
+    "media": "/media/memes/clock it.jpeg",
+    "question": "Can you recognize this viral hand gesture?",
     "options": [
-      { "text": "OPTION A (CORRECT)" },
-      { "text": "OPTION B" },
-      { "text": "OPTION C" }
+      { "text": "Clock itttt" },
+      { "text": "Six-sevennnn" }
     ],
     "answer": 0
   }
