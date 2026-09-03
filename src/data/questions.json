@@ -1,0 +1,207 @@
+[
+  {
+    "id": 1,
+    "category": "memes",
+    "mode": "feed",
+    "type": "image",
+    "media": "/media/memes/q1_distracted_bf.jpg",
+    "question": "BE HONEST. HAVE YOU SEEN THIS ON YOUR FEED?",
+    "options": [
+      { "text": "THIS HAS BEEN EVERYWHERE", "exposureScore": 70 },
+      { "text": "I'VE SEEN IT A FEW TIMES", "exposureScore": 50 },
+      { "text": "VAGUELY FAMILIAR", "exposureScore": 30 },
+      { "text": "NEVER SEEN THIS", "exposureScore": 0 }
+    ]
+  },
+  {
+    "id": 2,
+    "category": "memes",
+    "mode": "recognition",
+    "type": "image",
+    "media": "/media/memes/q2_doge_buff.jpg",
+    "question": "In the comparison meme featuring two Shiba Inus, who represents the modern, anxious generation?",
+    "options": [
+      "Kabosu",
+      "Cheems",
+      "Doge Senior",
+      "Walter"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 3,
+    "category": "memes",
+    "mode": "feed",
+    "type": "none",
+    "media": null,
+    "question": "Did you live through the 2016 Harambe gorilla lore timeline?",
+    "options": [
+      { "text": "I WAS THERE. UNFORGETTABLE.", "exposureScore": 70 },
+      { "text": "NEVER HEARD OF THIS", "exposureScore": 0 }
+    ]
+  },
+  {
+    "id": 4,
+    "category": "movies",
+    "mode": "feed",
+    "type": "image",
+    "media": "/media/movies/q4_barbenheimer.jpg",
+    "question": "Did your feed explode with 'Barbenheimer' double-feature memes in Summer 2023?",
+    "options": [
+      { "text": "I COULD NOT ESCAPE IT", "exposureScore": 70 },
+      { "text": "SAW A COUPLE OF CLIPS", "exposureScore": 40 },
+      { "text": "TOTALLY MISSED IT", "exposureScore": 0 }
+    ]
+  },
+  {
+    "id": 5,
+    "category": "movies",
+    "mode": "recognition",
+    "type": "none",
+    "media": null,
+    "question": "In 'The Matrix', which pill reveals the harsh truth of reality?",
+    "options": [
+      "The Blue Pill",
+      "The Red Pill"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 6,
+    "category": "movies",
+    "mode": "recognition",
+    "type": "audio",
+    "media": "/media/movies/q6_inception_horn.wav",
+    "question": "Listen to this thunderous brass drone. Which blockbuster popularized the iconic 'BRAAM' trailer sound?",
+    "options": [
+      "Inception",
+      "Dunkirk",
+      "Tenet"
+    ],
+    "answer": 0
+  },
+  {
+    "id": 7,
+    "category": "music",
+    "mode": "feed",
+    "type": "audio",
+    "media": "/media/music/q7_rickroll.wav",
+    "question": "Listen to this melody. How many times have you been Rickrolled online?",
+    "options": [
+      { "text": "COUNTLESS TIMES. UNFORGIVABLE.", "exposureScore": 70 },
+      { "text": "A FEW TIMES OVER THE YEARS", "exposureScore": 50 },
+      { "text": "MAYBE ONCE OR TWICE", "exposureScore": 30 },
+      { "text": "NEVER HAPPENED TO ME", "exposureScore": 0 }
+    ]
+  },
+  {
+    "id": 8,
+    "category": "music",
+    "mode": "recognition",
+    "type": "audio",
+    "media": "/media/music/q8_phonk.wav",
+    "question": "Listen to this distorted cowbell track. What viral electronic subgenre exploded on TikTok for drift car and gym edits?",
+    "options": [
+      "Nightcore",
+      "Drift Phonk",
+      "Hyperpop",
+      "Vaporwave"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 9,
+    "category": "music",
+    "mode": "feed",
+    "type": "image",
+    "media": "/media/music/q9_billie.jpg",
+    "question": "Have you seen this iconic neon-green hair era all over your explore page?",
+    "options": [
+      { "text": "DOMINATED MY TIMELINE", "exposureScore": 70 },
+      { "text": "VAGUELY SEEN IT AROUND", "exposureScore": 35 },
+      { "text": "FIRST TIME SEEING THIS", "exposureScore": 0 }
+    ]
+  },
+  {
+    "id": 10,
+    "category": "ai",
+    "mode": "recognition",
+    "type": "video",
+    "media": "/media/ai/q10_ai_spaghetti.mp4",
+    "question": "Watch this surreal generation clip. Which actor eating spaghetti became the defining benchmark of early AI video memes?",
+    "options": [
+      "Nicolas Cage",
+      "Will Smith",
+      "Keanu Reeves"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 11,
+    "category": "ai",
+    "mode": "feed",
+    "type": "image",
+    "media": "/media/ai/q11_pope_puffer.jpg",
+    "question": "DID THIS IMAGE DECEIVE YOU? The viral AI Pope in the luxury white puffer jacket:",
+    "options": [
+      { "text": "I 100% THOUGHT IT WAS REAL", "exposureScore": 70 },
+      { "text": "I KNEW IT WAS AI IMMEDIATELY", "exposureScore": 60 },
+      { "text": "VAGUELY REMEMBER SCROLLING PAST", "exposureScore": 30 },
+      { "text": "NEVER SEEN THIS BEFORE", "exposureScore": 0 }
+    ]
+  },
+  {
+    "id": 12,
+    "category": "ai",
+    "mode": "recognition",
+    "type": "none",
+    "media": null,
+    "question": "What technical term describes when an AI model fabricates false information with absolute confidence?",
+    "options": [
+      "Deepfaking",
+      "Hallucination",
+      "Quantization"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 13,
+    "category": "slang",
+    "mode": "feed",
+    "type": "none",
+    "media": null,
+    "question": "How often do you hear or read the phrase 'let him cook' in conversations or comments?",
+    "options": [
+      { "text": "EVERY SINGLE DAY", "exposureScore": 70 },
+      { "text": "REGULARLY ON MY FEED", "exposureScore": 50 },
+      { "text": "OCCASIONALLY HEARD IT", "exposureScore": 30 },
+      { "text": "NEVER HEARD IT USED", "exposureScore": 0 }
+    ]
+  },
+  {
+    "id": 14,
+    "category": "slang",
+    "mode": "feed",
+    "type": "image",
+    "media": "/media/slang/q14_touch_grass.jpg",
+    "question": "HAS SOMEONE PERSONALLY TOLD YOU TO 'TOUCH GRASS' ON THE INTERNET?",
+    "options": [
+      { "text": "YES, MULTIPLE TIMES", "exposureScore": 70 },
+      { "text": "NO, NEVER", "exposureScore": 0 }
+    ]
+  },
+  {
+    "id": 15,
+    "category": "slang",
+    "mode": "recognition",
+    "type": "none",
+    "media": null,
+    "question": "If an obsessive thought or internet argument occupies your mind without paying anything, it lives there...",
+    "options": [
+      "Rent-free",
+      "Squatter-mode",
+      "Tax-exempt"
+    ],
+    "answer": 0
+  }
+]
