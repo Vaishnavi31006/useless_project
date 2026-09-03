@@ -10,12 +10,12 @@ import { QuestionMode, UserAnswer } from '../types/quiz';
  * 
  * Recognition Questions:
  * - Correct: 70 base + speed bonus (up to 30) -> Max 100
- * - Wrong / Timeout: 0 points
+ * - Wrong / Timeout: ALWAYS 0 points
  * 
  * Feed Exposure Questions:
- * - Base points from option's exposureScore (e.g. 70, 50, 30, 0)
+ * - Base points from option's exposureScore (0 to 70)
  * - Speed bonus awarded ONLY if exposureScore > 0
- * - Never seen (exposureScore === 0) or timeout: 0 points regardless of speed
+ * - If exposureScore === 0 ("Never Seen"): final score MUST be 0 regardless of time
  */
 
 export function calculateRecognitionScore(isCorrect: boolean, timeTaken: number) {
@@ -30,7 +30,7 @@ export function calculateRecognitionScore(isCorrect: boolean, timeTaken: number)
 }
 
 export function calculateFeedScore(exposureScore: number, timeTaken: number) {
-  // If user claims never seen (exposure 0), speed bonus is 0
+  // If user claims never seen (exposure 0), speed bonus is 0 and final score is 0
   if (exposureScore <= 0) {
     return { score: 0, speedScore: 0, baseScore: 0 };
   }
@@ -57,13 +57,10 @@ export function calculateTotalStats(answers: UserAnswer[], totalQuestions: numbe
   const totalScore = answers.reduce((acc, curr) => acc + curr.score, 0);
   const percentage = maxScore > 0 ? Math.round((totalScore / maxScore) * 100) : 0;
 
-  // Recognized count: correct for recognition, or exposureScore > 0 for feed
-  const recognizedCount = answers.filter(a => {
-    if (a.mode === 'feed') {
-      return (a.exposureScore ?? 0) > 0;
-    }
-    return Boolean(a.isCorrect);
-  }).length;
+  // Recognition questions only
+  const recognitionAnswers = answers.filter(a => a.mode === 'recognition');
+  const recognitionTotal = recognitionAnswers.length;
+  const recognitionCorrect = recognitionAnswers.filter(a => a.isCorrect === true).length;
 
   const validTimes = answers.map(a => a.timeTaken).filter(t => t >= 0 && t <= 10);
   const averageTime = validTimes.length > 0
@@ -79,7 +76,8 @@ export function calculateTotalStats(answers: UserAnswer[], totalQuestions: numbe
     totalScore,
     maxScore,
     percentage,
-    recognizedCount,
+    recognitionCorrect,
+    recognitionTotal,
     totalQuestions,
     averageTime,
     fastestTime,

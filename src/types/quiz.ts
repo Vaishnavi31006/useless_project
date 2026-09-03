@@ -4,7 +4,7 @@ export type QuestionMode = 'feed' | 'recognition';
 
 export interface QuestionOption {
   text: string;
-  exposureScore?: number; // e.g. 70 (everywhere), 50 (moderate), 30 (vague), 0 (never)
+  exposureScore?: number; // 0 to 70 for Feed questions
 }
 
 export interface Question {
@@ -15,7 +15,7 @@ export interface Question {
   media: string | null;
   question: string;
   options: (string | QuestionOption)[]; // 2, 3, or 4 options
-  answer?: number; // 0-based index, required only for 'recognition'
+  answer?: number; // 0-based index, required for 'recognition'
 }
 
 export interface UserAnswer {
@@ -23,10 +23,10 @@ export interface UserAnswer {
   mode: QuestionMode;
   selectedOption: number | null; // null on timeout
   selectedOptionText: string | null;
-  exposureScore?: number; // For feed questions
-  isCorrect?: boolean; // For recognition questions
-  timeTaken: number; // seconds (0 - 10s)
-  score: number; // 0 - 100
+  exposureScore?: number; // for feed questions
+  isCorrect?: boolean; // for recognition questions
+  timeTaken: number; // in seconds
+  score: number; // 0 to 100
   commentary: string;
 }
 
@@ -45,8 +45,9 @@ export interface QuizStats {
   totalScore: number;
   maxScore: number;
   percentage: number;
-  recognizedCount: number; // Correct recognition answers + claimed feed exposure
-  totalQuestions: number;
+  recognitionCorrect: number; // Correct recognition answers
+  recognitionTotal: number; // Total recognition questions
+  totalQuestions: number; // All questions (feed + recognition)
   averageTime: number;
   fastestTime: number | null;
   verdict: {

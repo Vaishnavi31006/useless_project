@@ -1,10 +1,11 @@
 import React from 'react';
-import { Award, Zap, Timer, Globe } from 'lucide-react';
+import { Award, Zap, Timer, CheckCircle } from 'lucide-react';
 
 interface ResultStatsProps {
   totalScore: number;
   maxScore: number;
-  recognizedCount: number;
+  recognitionCorrect: number;
+  recognitionTotal: number;
   totalQuestions: number;
   averageTime: number;
   fastestTime: number | null;
@@ -13,13 +14,12 @@ interface ResultStatsProps {
 export const ResultStats: React.FC<ResultStatsProps> = ({
   totalScore,
   maxScore,
-  recognizedCount,
+  recognitionCorrect,
+  recognitionTotal,
   totalQuestions,
   averageTime,
   fastestTime,
 }) => {
-  const recognitionRate = totalQuestions > 0 ? Math.round((recognizedCount / totalQuestions) * 100) : 0;
-
   return (
     <div className="w-full max-w-xl mx-auto grid grid-cols-2 gap-3 my-6">
       {/* Stat 1: Total Points */}
@@ -32,21 +32,29 @@ export const ResultStats: React.FC<ResultStatsProps> = ({
           <span className="font-display text-2xl font-bold text-white">{totalScore}</span>
           <span className="font-mono text-xs text-slate-500">/ {maxScore}</span>
         </div>
-        <span className="text-[11px] text-slate-500 mt-1 font-mono">Max 100 pts per stage</span>
+        <span className="text-[11px] text-slate-500 mt-1 font-mono">
+          Across {totalQuestions} total stages
+        </span>
       </div>
 
-      {/* Stat 2: Internet Exposure / Cultural Recognition */}
+      {/* Stat 2: Recognition Performance (Only counts mode === 'recognition') */}
       <div className="glass-panel rounded-2xl p-4 flex flex-col justify-between border border-white/5">
         <div className="flex items-center justify-between text-slate-400 mb-2">
-          <span className="font-mono text-xs uppercase tracking-wider">Internet Exposure</span>
-          <Globe className="w-4 h-4 text-brand-emerald" />
+          <span className="font-mono text-xs uppercase tracking-wider">Recognition</span>
+          <CheckCircle className="w-4 h-4 text-brand-emerald" />
         </div>
         <div className="flex items-baseline gap-1">
-          <span className="font-display text-2xl font-bold text-emerald-400">{recognizedCount}</span>
-          <span className="font-mono text-xs text-slate-500">/ {totalQuestions}</span>
+          <span className="font-display text-2xl font-bold text-emerald-400">
+            {recognitionCorrect}
+          </span>
+          <span className="font-mono text-xs text-slate-500">
+            / {recognitionTotal}
+          </span>
         </div>
         <span className="text-[11px] text-slate-500 mt-1 font-mono">
-          {recognitionRate}% content encountered
+          {recognitionTotal > 0
+            ? `${Math.round((recognitionCorrect / recognitionTotal) * 100)}% recall rate`
+            : "No recognition stages"}
         </span>
       </div>
 
@@ -60,7 +68,7 @@ export const ResultStats: React.FC<ResultStatsProps> = ({
           <span className="font-display text-2xl font-bold text-white">{averageTime.toFixed(1)}</span>
           <span className="font-mono text-xs text-slate-500">seconds</span>
         </div>
-        <span className="text-[11px] text-slate-500 mt-1 font-mono">Recognition reaction</span>
+        <span className="text-[11px] text-slate-500 mt-1 font-mono">Reaction time</span>
       </div>
 
       {/* Stat 4: Fastest Answer */}

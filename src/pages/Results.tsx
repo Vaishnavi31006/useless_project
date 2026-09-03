@@ -52,7 +52,7 @@ export const Results: React.FC<ResultsProps> = ({ stats, onRetake }) => {
         startVelocity: 45,
       });
     } catch (e) {
-      // Fallback if canvas is unavailable
+      // Fallback
     }
   }, []);
 
@@ -123,7 +123,8 @@ export const Results: React.FC<ResultsProps> = ({ stats, onRetake }) => {
       <ResultStats
         totalScore={stats.totalScore}
         maxScore={stats.maxScore}
-        recognizedCount={stats.recognizedCount}
+        recognitionCorrect={stats.recognitionCorrect}
+        recognitionTotal={stats.recognitionTotal}
         totalQuestions={stats.totalQuestions}
         averageTime={stats.averageTime}
         fastestTime={stats.fastestTime}

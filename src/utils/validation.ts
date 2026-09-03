@@ -43,7 +43,7 @@ export function validateQuestions(questions: any[]): { isValid: boolean; errors:
       });
     }
 
-    // Mode validation: 'feed' or 'recognition'
+    // Mode validation
     if (!VALID_MODES.includes(q.mode)) {
       errors.push({
         questionId: q.id,
@@ -79,7 +79,7 @@ export function validateQuestions(questions: any[]): { isValid: boolean; errors:
       });
     }
 
-    // Options count validation: 2, 3, or 4 options!
+    // Options count validation: minimum 2, maximum 4 options
     if (!Array.isArray(q.options) || q.options.length < 2 || q.options.length > 4) {
       errors.push({
         questionId: q.id,
@@ -97,22 +97,35 @@ export function validateQuestions(questions: any[]): { isValid: boolean; errors:
           });
         }
 
-        // For feed questions, validate exposureScore if option is an object
+        // For Feed questions: each option must have exposureScore between 0 and 70
         if (q.mode === 'feed') {
-          if (typeof opt === 'object' && opt !== null) {
-            if (typeof opt.exposureScore !== 'number' || isNaN(opt.exposureScore) || opt.exposureScore < 0) {
-              errors.push({
-                questionId: q.id,
-                field: `options[${optIdx}].exposureScore`,
-                message: `${qIndex} (ID: ${q.id}): Feed option #${optIdx + 1} must have a valid non-negative 'exposureScore' number.`
-              });
-            }
+          if (typeof opt !== 'object' || opt === null || typeof opt.exposureScore !== 'number') {
+            errors.push({
+              questionId: q.id,
+              field: `options[${optIdx}].exposureScore`,
+              message: `${qIndex} (ID: ${q.id}): Feed option #${optIdx + 1} must be an object with an 'exposureScore' number.`
+            });
+          } else if (opt.exposureScore < 0 || opt.exposureScore > 70) {
+            errors.push({
+              questionId: q.id,
+              field: `options[${optIdx}].exposureScore`,
+              message: `${qIndex} (ID: ${q.id}): Feed option #${optIdx + 1} exposureScore must be between 0 and 70. Found: ${opt.exposureScore}.`
+            });
           }
         }
       });
     }
 
-    // Recognition questions must have a valid answer index
+    // Feed questions must NOT contain an "answer" field
+    if (q.mode === 'feed' && q.answer !== undefined) {
+      errors.push({
+        questionId: q.id,
+        field: 'answer',
+        message: `${qIndex} (ID: ${q.id}): Feed questions must NOT have an 'answer' field because there is no objectively correct answer.`
+      });
+    }
+
+    // Recognition questions MUST contain a valid "answer" field (0-based index)
     if (q.mode === 'recognition') {
       if (typeof q.answer !== 'number' || !Number.isInteger(q.answer)) {
         errors.push({

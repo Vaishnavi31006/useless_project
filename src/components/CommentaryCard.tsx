@@ -28,7 +28,7 @@ export const CommentaryCard: React.FC<CommentaryCardProps> = ({
   const [autoAdvanceProgress, setAutoAdvanceProgress] = useState(100);
 
   useEffect(() => {
-    const duration = 2400; // ms
+    const duration = 2500; // ms
     const interval = 25;
     const step = (interval / duration) * 100;
 
@@ -59,54 +59,62 @@ export const CommentaryCard: React.FC<CommentaryCardProps> = ({
     };
   }, [onNext]);
 
+  // Feed exposure label helper
+  const getExposureLabel = (scoreVal: number) => {
+    if (scoreVal >= 70) return "VERY HIGH";
+    if (scoreVal >= 40) return "MODERATE";
+    if (scoreVal > 0) return "VAGUE";
+    return "NONE";
+  };
+
   return (
     <div className="w-full max-w-2xl mx-auto my-4 animate-scale-in">
       <div className="relative overflow-hidden rounded-2xl glass-panel border border-brand-violet/30 p-5 sm:p-6 shadow-2xl bg-dark-900/95">
-        {/* Top header: Outcome + Speed */}
-        <div className="flex items-center justify-between gap-2 border-b border-white/10 pb-3.5 mb-3.5">
+        {/* Top header: Outcome / Exposure + Time + Points */}
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-3.5 mb-3.5">
           <div className="flex items-center gap-2">
             {mode === 'feed' ? (
-              // FEED MODE: never say "Correct" or "Incorrect"
+              // FEED MODE: NEVER say "Correct" or "Incorrect"
               isTimeout ? (
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold font-mono bg-rose-500/20 text-rose-400 border border-rose-500/30">
                   <AlertTriangle className="w-3.5 h-3.5" />
-                  TIMEOUT (0 PTS)
-                </span>
-              ) : exposureScore === 0 ? (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold font-mono bg-slate-700/40 text-slate-300 border border-white/10">
-                  <Eye className="w-3.5 h-3.5 text-slate-400" />
-                  ZERO EXPOSURE (0 PTS)
+                  TIMEOUT
                 </span>
               ) : (
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold font-mono bg-brand-violet/25 text-brand-cyan border border-brand-violet/40">
                   <Eye className="w-3.5 h-3.5" />
-                  EXPOSURE CONFIRMED (+{score} PTS)
+                  EXPOSURE: {getExposureLabel(exposureScore)}
                 </span>
               )
             ) : (
-              // RECOGNITION MODE: objective Correct / Incorrect / Timeout
+              // RECOGNITION MODE: objective Correct / Incorrect
               isTimeout ? (
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold font-mono bg-rose-500/20 text-rose-400 border border-rose-500/30">
                   <AlertTriangle className="w-3.5 h-3.5" />
-                  TIMEOUT (0 PTS)
+                  TIMEOUT
                 </span>
               ) : isCorrect ? (
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold font-mono bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
                   <CheckCircle2 className="w-3.5 h-3.5" />
-                  CORRECT (+{score} PTS)
+                  CORRECT
                 </span>
               ) : (
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold font-mono bg-rose-500/20 text-rose-400 border border-rose-500/30">
                   <XCircle className="w-3.5 h-3.5" />
-                  INCORRECT (0 PTS)
+                  INCORRECT
                 </span>
               )
             )}
           </div>
 
-          <div className="flex items-center gap-1.5 font-mono text-xs text-slate-400 bg-dark-850 px-2.5 py-1 rounded-lg border border-white/5">
-            <Zap className="w-3 h-3 text-brand-amber" />
-            <span>{timeTaken.toFixed(1)}s</span>
+          <div className="flex items-center gap-2 font-mono text-xs text-slate-300">
+            <span className="bg-dark-850 px-2.5 py-1 rounded-lg border border-white/5 flex items-center gap-1">
+              <Zap className="w-3 h-3 text-brand-amber" />
+              <span>TIME: {timeTaken.toFixed(1)}s</span>
+            </span>
+            <span className="bg-dark-850 px-2.5 py-1 rounded-lg border border-white/5 font-bold text-brand-cyan">
+              POINTS: {score}
+            </span>
           </div>
         </div>
 
