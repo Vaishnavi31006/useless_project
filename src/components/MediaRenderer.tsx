@@ -5,17 +5,11 @@ import { Volume2, Play, AlertCircle, Sparkles, FastForward } from 'lucide-react'
 interface MediaRendererProps {
   type: MediaType;
   media: string | null;
-  onMediaReady: () => void;
-  onMediaPlayingChange: (isPlaying: boolean) => void;
-  onMediaFinished: () => void;
 }
 
 export const MediaRenderer: React.FC<MediaRendererProps> = ({
   type,
   media,
-  onMediaReady,
-  onMediaPlayingChange,
-  onMediaFinished,
 }) => {
   const [hasError, setHasError] = useState<boolean>(false);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -32,13 +26,11 @@ export const MediaRenderer: React.FC<MediaRendererProps> = ({
     setAudioProgress(0);
 
     if (type === 'none' || !media) {
-      onMediaReady();
       return;
     }
 
     if (type === 'audio') {
-      onMediaPlayingChange(true);
-      const timer = setTimeout(() => {
+      const delayHandle = setTimeout(() => {
         if (audioRef.current) {
           audioRef.current.currentTime = 0;
           audioRef.current.play()
@@ -52,12 +44,11 @@ export const MediaRenderer: React.FC<MediaRendererProps> = ({
             });
         }
       }, 100);
-      return () => clearTimeout(timer);
+      return () => clearTimeout(delayHandle);
     }
 
     if (type === 'video') {
-      onMediaPlayingChange(true);
-      const timer = setTimeout(() => {
+      const delayHandle = setTimeout(() => {
         if (videoRef.current) {
           videoRef.current.currentTime = 0;
           videoRef.current.play()
@@ -71,7 +62,7 @@ export const MediaRenderer: React.FC<MediaRendererProps> = ({
             });
         }
       }, 100);
-      return () => clearTimeout(timer);
+      return () => clearTimeout(delayHandle);
     }
   }, [media, type]);
 
@@ -81,34 +72,34 @@ export const MediaRenderer: React.FC<MediaRendererProps> = ({
       audioRef.current.play()
         .then(() => {
           setIsPlaying(true);
-          onMediaPlayingChange(true);
         })
         .catch(() => {
-          handleEnd();
+          setIsPlaying(false);
         });
     } else if (type === 'video' && videoRef.current) {
       videoRef.current.play()
         .then(() => {
           setIsPlaying(true);
-          onMediaPlayingChange(true);
         })
         .catch(() => {
-          handleEnd();
+          setIsPlaying(false);
         });
     }
   };
 
   const handleEnd = () => {
     setIsPlaying(false);
-    onMediaPlayingChange(false);
-    onMediaFinished();
+    if (audioRef.current) {
+      audioRef.current.pause();
+    }
+    if (videoRef.current) {
+      videoRef.current.pause();
+    }
   };
 
   const handleError = () => {
     setHasError(true);
     setIsPlaying(false);
-    onMediaPlayingChange(false);
-    onMediaReady();
   };
 
   if (type === 'none' || !media) {
@@ -121,7 +112,7 @@ export const MediaRenderer: React.FC<MediaRendererProps> = ({
         <div className="w-full h-44 rounded-2xl bg-dark-850 border border-white/10 flex flex-col items-center justify-center text-slate-400 p-6 text-center">
           <AlertCircle className="w-8 h-8 text-amber-400 mb-2 opacity-80" />
           <p className="text-sm font-medium text-slate-300">Media asset preview unavailable</p>
-          <p className="text-xs text-slate-500 mt-1">Recognition window active. Please choose your option.</p>
+          <p className="text-xs text-slate-500 mt-1">Please select your option below.</p>
         </div>
       ) : (
         <>
@@ -131,7 +122,6 @@ export const MediaRenderer: React.FC<MediaRendererProps> = ({
                 src={media}
                 alt="Brainrot quiz artifact"
                 loading="eager"
-                onLoad={onMediaReady}
                 onError={handleError}
                 className="w-full max-h-[320px] sm:max-h-[380px] object-contain mx-auto transition-transform duration-500 group-hover:scale-[1.01]"
               />
@@ -175,7 +165,7 @@ export const MediaRenderer: React.FC<MediaRendererProps> = ({
                   </h4>
                   <p className="text-xs text-slate-400 mt-0.5">
                     {isPlaying 
-                      ? "Listen carefully. Recognition timer starts when the audio finishes."
+                      ? "Listening to audio cue..."
                       : autoplayBlocked
                       ? "Browser blocked autoplay. Click Play to listen."
                       : "Audio clip completed."}
@@ -204,10 +194,10 @@ export const MediaRenderer: React.FC<MediaRendererProps> = ({
                     <button
                       onClick={handleEnd}
                       className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-dark-800 hover:bg-dark-700 text-slate-400 hover:text-white font-mono text-[11px] transition border border-white/5"
-                      title="Skip directly to timer"
+                      title="Stop Audio"
                     >
                       <FastForward className="w-3.5 h-3.5" />
-                      <span>Skip Audio</span>
+                      <span>Stop Audio</span>
                     </button>
                   )}
                 </div>
@@ -238,7 +228,6 @@ export const MediaRenderer: React.FC<MediaRendererProps> = ({
                     <Play className="w-6 h-6 fill-white ml-0.5" />
                   </button>
                   <p className="text-xs text-slate-300 font-medium">Click to watch video clip</p>
-                  <p className="text-[11px] text-slate-500">Timer begins only after playback concludes</p>
                 </div>
               )}
 
@@ -249,7 +238,7 @@ export const MediaRenderer: React.FC<MediaRendererProps> = ({
                     className="flex items-center gap-1 px-2.5 py-1 rounded-md bg-black/60 hover:bg-black/80 backdrop-blur-md text-slate-300 hover:text-white font-mono text-[10px] border border-white/10 transition"
                   >
                     <FastForward className="w-3 h-3" />
-                    <span>Skip Video</span>
+                    <span>Stop Video</span>
                   </button>
                 </div>
               )}

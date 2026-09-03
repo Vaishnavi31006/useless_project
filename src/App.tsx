@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import rawQuestions from './data/questions.json';
 import { Question } from './types/quiz';
 import { validateQuestions } from './utils/validation';
@@ -36,23 +36,23 @@ export const App: React.FC = () => {
     retakeQuiz,
   } = useQuiz(questions);
 
-  const handleStart = () => {
+  const handleStart = useCallback(() => {
     retakeQuiz();
     setCurrentScreen('quiz');
-  };
+  }, [retakeQuiz]);
 
-  const handleNextQuestion = () => {
+  const handleNextQuestion = useCallback(() => {
     if (isLastQuestion) {
       setCurrentScreen('results');
     } else {
       nextQuestion();
     }
-  };
+  }, [isLastQuestion, nextQuestion]);
 
-  const handleRetake = () => {
+  const handleRetake = useCallback(() => {
     retakeQuiz();
     setCurrentScreen('quiz');
-  };
+  }, [retakeQuiz]);
 
   return (
     <div className="min-h-screen bg-dark-950 text-slate-100 flex flex-col justify-between selection:bg-brand-violet selection:text-white font-sans relative overflow-x-hidden">
@@ -98,16 +98,6 @@ export const App: React.FC = () => {
           />
         )}
       </main>
-
-      <footer className="relative z-10 py-4 px-6 text-center text-[11px] font-mono text-slate-600 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between max-w-5xl mx-auto w-full gap-2">
-        <div className="flex items-center gap-2">
-          <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-          <span>BRAINROT METER v1.2 • DUAL-MODE FEED & RECOGNITION</span>
-        </div>
-        <div className="text-slate-500">
-          Built for TinkerHub Useless Projects
-        </div>
-      </footer>
     </div>
   );
 };

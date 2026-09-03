@@ -6,49 +6,41 @@ import { QuestionMode, UserAnswer } from '../types/quiz';
  * Rules:
  * - Every question has a max score of 100
  * - Total max score = questions.length * 100 (Dynamic, never hardcoded)
- * - Speed bonus formula: 30 * Math.max(0, 1 - timeTaken / 10)
+ * - NO timers, NO time-based calculations, NO speed bonuses.
  * 
  * Recognition Questions:
- * - Correct: 70 base + speed bonus (up to 30) -> Max 100
- * - Wrong / Timeout: ALWAYS 0 points
+ * - Correct: 100 points
+ * - Wrong: 0 points
  * 
  * Feed Exposure Questions:
- * - Base points from option's exposureScore (0 to 70)
- * - Speed bonus awarded ONLY if exposureScore > 0
- * - If exposureScore === 0 ("Never Seen"): final score MUST be 0 regardless of time
+ * - Scales 0-70 exposureScore to 0-100:
+ *   70 -> 100
+ *   50 -> 71
+ *   30 -> 43
+ *   0  -> 0
+ * - Formula: Math.round((exposureScore / 70) * 100)
  */
 
-export function calculateRecognitionScore(isCorrect: boolean, timeTaken: number) {
-  if (!isCorrect) {
-    return { score: 0, speedScore: 0, baseScore: 0 };
-  }
-  const clampedTime = Math.max(0, Math.min(10, timeTaken));
-  const speedScore = Math.round(30 * Math.max(0, 1 - clampedTime / 10));
-  const baseScore = 70;
-  const score = baseScore + speedScore;
-  return { score, speedScore, baseScore };
+export function calculateRecognitionScore(isCorrect: boolean): { score: number } {
+  return { score: isCorrect ? 100 : 0 };
 }
 
-export function calculateFeedScore(exposureScore: number, timeTaken: number) {
-  // If user claims never seen (exposure 0), speed bonus is 0 and final score is 0
+export function calculateFeedScore(exposureScore: number): { score: number } {
   if (exposureScore <= 0) {
-    return { score: 0, speedScore: 0, baseScore: 0 };
+    return { score: 0 };
   }
-  const clampedTime = Math.max(0, Math.min(10, timeTaken));
-  const speedScore = Math.round(30 * Math.max(0, 1 - clampedTime / 10));
-  const baseScore = exposureScore;
-  const score = Math.min(100, baseScore + speedScore);
-  return { score, speedScore, baseScore };
+  const score = Math.min(100, Math.max(0, Math.round((exposureScore / 70) * 100)));
+  return { score };
 }
 
 export function calculateQuestionScore(
   mode: QuestionMode,
-  params: { isCorrect?: boolean; exposureScore?: number; timeTaken: number }
-) {
+  params: { isCorrect?: boolean; exposureScore?: number }
+): { score: number } {
   if (mode === 'feed') {
-    return calculateFeedScore(params.exposureScore ?? 0, params.timeTaken);
+    return calculateFeedScore(params.exposureScore ?? 0);
   } else {
-    return calculateRecognitionScore(Boolean(params.isCorrect), params.timeTaken);
+    return calculateRecognitionScore(Boolean(params.isCorrect));
   }
 }
 
@@ -61,16 +53,7 @@ export function calculateTotalStats(answers: UserAnswer[], totalQuestions: numbe
   const recognitionAnswers = answers.filter(a => a.mode === 'recognition');
   const recognitionTotal = recognitionAnswers.length;
   const recognitionCorrect = recognitionAnswers.filter(a => a.isCorrect === true).length;
-
-  const validTimes = answers.map(a => a.timeTaken).filter(t => t >= 0 && t <= 10);
-  const averageTime = validTimes.length > 0
-    ? Number((validTimes.reduce((a, b) => a + b, 0) / validTimes.length).toFixed(2))
-    : 0;
-
-  const positiveTimes = answers.filter(a => a.score > 0).map(a => a.timeTaken);
-  const fastestTime = positiveTimes.length > 0
-    ? Number(Math.min(...positiveTimes).toFixed(2))
-    : null;
+  const feedTotal = answers.filter(a => a.mode === 'feed').length;
 
   return {
     totalScore,
@@ -79,7 +62,6 @@ export function calculateTotalStats(answers: UserAnswer[], totalQuestions: numbe
     recognitionCorrect,
     recognitionTotal,
     totalQuestions,
-    averageTime,
-    fastestTime,
+    feedTotal,
   };
 }

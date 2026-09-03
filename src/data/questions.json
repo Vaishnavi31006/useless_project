@@ -7,9 +7,9 @@
     "media": null,
     "question": "Did you hear about the new name of Vaseline in your Instagram feed? ",
     "options": [
-      { "text": "OPTION A (ALL OVER MY FEED) ", "exposureScore": 70 },
-      { "text": "OPTION B (HEARD ABOUT IT) ", "exposureScore": 40 },
-      { "text": "OPTION C (NEVER HEARD)", "exposureScore": 0 }
+      { "text": "All over my feed", "exposureScore": 70 },
+      { "text": "Heard about it ", "exposureScore": 40 },
+      { "text": "Never heard", "exposureScore": 0 }
     ]
   },
   {
@@ -35,8 +35,8 @@
     "media": "/media/memes/selfobs.jpeg",
     "question": "Have you seen this self obsessed guy in your feed?",
     "options": [
-      { "text": "OPTION A (I KNOW THIS / SEEN IT)", "exposureScore": 70 },
-      { "text": "OPTION B (NEVER SEEN THIS)", "exposureScore": 0 }
+      { "text": "Yes i know him", "exposureScore": 70 },
+      { "text": "Never seen this guy", "exposureScore": 0 }
     ]
   },
 
@@ -62,10 +62,10 @@
     "media": "/media/music/turnaround.mp4",
     "question": "Have you seen this in your feed?",
     "options": [
-      { "text": "OPTION A (HEARD EVERYWHERE)", "exposureScore": 70 },
-      { "text": "OPTION B (A FEW TIMES)", "exposureScore": 50 },
-      { "text": "OPTION C (VAGUELY FAMILIAR)", "exposureScore": 30 },
-      { "text": "OPTION D (NEVER HEARD)", "exposureScore": 0 }
+      { "text": "All over my feed", "exposureScore": 70 },
+      { "text": "A few times", "exposureScore": 50 },
+      { "text": "Vaguely familiar", "exposureScore": 30 },
+      { "text": "Never heard", "exposureScore": 0 }
     ]
   },
   {
@@ -117,8 +117,8 @@
     "media": null,
     "question": "Start camera, Ayappa! Heard this recently?",
     "options": [
-      { "text": "OPTION A (YES, OF COURSE)", "exposureScore": 70 },
-      { "text": "OPTION D (NEVER SEEN THIS)", "exposureScore": 0 }
+      { "text": "Yess", "exposureScore": 70 },
+      { "text": "Nope", "exposureScore": 0 }
     ]
   },
   {

@@ -1,14 +1,13 @@
 import React from 'react';
-import { Award, Zap, Timer, CheckCircle } from 'lucide-react';
+import { Award, CheckCircle, Eye, Layers } from 'lucide-react';
 
 interface ResultStatsProps {
   totalScore: number;
   maxScore: number;
   recognitionCorrect: number;
   recognitionTotal: number;
+  feedTotal: number;
   totalQuestions: number;
-  averageTime: number;
-  fastestTime: number | null;
 }
 
 export const ResultStats: React.FC<ResultStatsProps> = ({
@@ -16,9 +15,8 @@ export const ResultStats: React.FC<ResultStatsProps> = ({
   maxScore,
   recognitionCorrect,
   recognitionTotal,
+  feedTotal,
   totalQuestions,
-  averageTime,
-  fastestTime,
 }) => {
   return (
     <div className="w-full max-w-xl mx-auto grid grid-cols-2 gap-3 my-6">
@@ -33,7 +31,7 @@ export const ResultStats: React.FC<ResultStatsProps> = ({
           <span className="font-mono text-xs text-slate-500">/ {maxScore}</span>
         </div>
         <span className="text-[11px] text-slate-500 mt-1 font-mono">
-          Across {totalQuestions} total stages
+          Max 100 pts per stage
         </span>
       </div>
 
@@ -58,31 +56,34 @@ export const ResultStats: React.FC<ResultStatsProps> = ({
         </span>
       </div>
 
-      {/* Stat 3: Avg Speed */}
+      {/* Stat 3: Feed Exposure Stages */}
       <div className="glass-panel rounded-2xl p-4 flex flex-col justify-between border border-white/5">
         <div className="flex items-center justify-between text-slate-400 mb-2">
-          <span className="font-mono text-xs uppercase tracking-wider">Avg Speed</span>
-          <Timer className="w-4 h-4 text-brand-cyan" />
+          <span className="font-mono text-xs uppercase tracking-wider">Feed Stages</span>
+          <Eye className="w-4 h-4 text-brand-cyan" />
         </div>
         <div className="flex items-baseline gap-1">
-          <span className="font-display text-2xl font-bold text-white">{averageTime.toFixed(1)}</span>
-          <span className="font-mono text-xs text-slate-500">seconds</span>
+          <span className="font-display text-2xl font-bold text-brand-cyan">{feedTotal}</span>
+          <span className="font-mono text-xs text-slate-500">stages</span>
         </div>
-        <span className="text-[11px] text-slate-500 mt-1 font-mono">Reaction time</span>
+        <span className="text-[11px] text-slate-500 mt-1 font-mono">
+          Algorithm exposure
+        </span>
       </div>
 
-      {/* Stat 4: Fastest Answer */}
+      {/* Stat 4: Total Questions */}
       <div className="glass-panel rounded-2xl p-4 flex flex-col justify-between border border-white/5">
         <div className="flex items-center justify-between text-slate-400 mb-2">
-          <span className="font-mono text-xs uppercase tracking-wider">Fastest Hit</span>
-          <Zap className="w-4 h-4 text-brand-amber" />
+          <span className="font-mono text-xs uppercase tracking-wider">Total Stages</span>
+          <Layers className="w-4 h-4 text-brand-amber" />
         </div>
         <div className="flex items-baseline gap-1">
-          <span className="font-display text-2xl font-bold text-amber-400">
-            {fastestTime !== null ? `${fastestTime.toFixed(1)}s` : '—'}
-          </span>
+          <span className="font-display text-2xl font-bold text-amber-400">{totalQuestions}</span>
+          <span className="font-mono text-xs text-slate-500">total</span>
         </div>
-        <span className="text-[11px] text-slate-500 mt-1 font-mono">Peak reflex reaction</span>
+        <span className="text-[11px] text-slate-500 mt-1 font-mono">
+          Full assessment
+        </span>
       </div>
     </div>
   );

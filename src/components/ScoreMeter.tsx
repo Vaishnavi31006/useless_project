@@ -11,16 +11,22 @@ export const ScoreMeter: React.FC<ScoreMeterProps> = ({
   meterColor = "#8b5cf6",
   verdictTitle,
 }) => {
-  const [displayValue, setDisplayValue] = useState(0);
+  const safePercentage = typeof percentage === 'number' && !isNaN(percentage)
+    ? Math.min(100, Math.max(0, Math.round(percentage)))
+    : 0;
+
+  const [displayValue, setDisplayValue] = useState(safePercentage);
 
   useEffect(() => {
     let start = 0;
-    const end = Math.min(100, Math.max(0, percentage));
-    const duration = 1400; // ms
-    const startTime = performance.now();
+    const end = safePercentage;
+    const duration = 1200; // ms
+    let startTimestamp: number | null = null;
+    let animationFrameId: number;
 
-    const frame = (now: number) => {
-      const elapsed = now - startTime;
+    const frame = (timestamp: number) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const elapsed = timestamp - startTimestamp;
       const progress = Math.min(1, elapsed / duration);
       const easeProgress = 1 - Math.pow(1 - progress, 3);
       const current = Math.round(start + (end - start) * easeProgress);
@@ -28,13 +34,17 @@ export const ScoreMeter: React.FC<ScoreMeterProps> = ({
       setDisplayValue(current);
 
       if (progress < 1) {
-        requestAnimationFrame(frame);
+        animationFrameId = requestAnimationFrame(frame);
       }
     };
 
-    const anim = requestAnimationFrame(frame);
-    return () => cancelAnimationFrame(anim);
-  }, [percentage]);
+    animationFrameId = requestAnimationFrame(frame);
+    return () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+    };
+  }, [safePercentage]);
 
   const size = 260;
   const strokeWidth = 16;

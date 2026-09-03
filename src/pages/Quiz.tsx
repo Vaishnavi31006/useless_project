@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Question, UserAnswer, getOptionText } from '../types/quiz';
-import { useTimer } from '../hooks/useTimer';
 import { MediaRenderer } from '../components/MediaRenderer';
-import { Timer } from '../components/Timer';
 import { ProgressBar } from '../components/ProgressBar';
 import { AnswerOption } from '../components/AnswerOption';
 import { CommentaryCard } from '../components/CommentaryCard';
@@ -15,7 +13,7 @@ interface QuizProps {
   currentCommentary: string | null;
   lastAnswer: UserAnswer | null;
   isLastQuestion: boolean;
-  onSubmitAnswer: (selectedIndex: number | null, timeTaken: number, isTimeout?: boolean) => void;
+  onSubmitAnswer: (selectedIndex: number) => void;
   onNextQuestion: () => void;
 }
 
@@ -32,51 +30,19 @@ export const Quiz: React.FC<QuizProps> = ({
 }) => {
   const currentQuestion = questions[currentIndex];
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
-  const [isMediaPlaying, setIsMediaPlaying] = useState<boolean>(false);
   const answerSubmittedRef = useRef<boolean>(false);
 
   useEffect(() => {
     setSelectedOption(null);
-    setIsMediaPlaying(false);
     answerSubmittedRef.current = false;
   }, [currentIndex]);
 
-  const handleTimeout = useCallback(() => {
-    if (answerSubmittedRef.current || isLocked) return;
-    answerSubmittedRef.current = true;
-    onSubmitAnswer(null, 10.0, true);
-  }, [isLocked, onSubmitAnswer]);
-
-  const { timeLeft, startTimer, stopTimer, resetTimer } = useTimer({
-    maxDuration: 10,
-    onTimeout: handleTimeout,
-  });
-
-  const handleMediaFinished = useCallback(() => {
-    setIsMediaPlaying(false);
-    startTimer();
-  }, [startTimer]);
-
-  const handleMediaReady = useCallback(() => {
-    if (currentQuestion?.type !== 'audio' && currentQuestion?.type !== 'video') {
-      startTimer();
-    }
-  }, [currentQuestion?.type, startTimer]);
-
-  const handleMediaPlayingChange = useCallback((playing: boolean) => {
-    setIsMediaPlaying(playing);
-    if (playing) {
-      resetTimer();
-    }
-  }, [resetTimer]);
-
   const handleSelectOption = useCallback((optionIndex: number) => {
-    if (isLocked || answerSubmittedRef.current || isMediaPlaying) return;
+    if (isLocked || answerSubmittedRef.current) return;
     answerSubmittedRef.current = true;
     setSelectedOption(optionIndex);
-    const elapsed = stopTimer();
-    onSubmitAnswer(optionIndex, elapsed, false);
-  }, [isLocked, isMediaPlaying, stopTimer, onSubmitAnswer]);
+    onSubmitAnswer(optionIndex);
+  }, [isLocked, onSubmitAnswer]);
 
   // Keyboard navigation adapted to number of options (2, 3, or 4)
   useEffect(() => {
@@ -89,7 +55,7 @@ export const Quiz: React.FC<QuizProps> = ({
 
       if (allowedKeys.includes(e.key)) {
         const idx = parseInt(e.key, 10) - 1;
-        if (idx >= 0 && idx < numOptions && !isLocked && !isMediaPlaying) {
+        if (idx >= 0 && idx < numOptions && !isLocked) {
           e.preventDefault();
           handleSelectOption(idx);
         }
@@ -98,7 +64,7 @@ export const Quiz: React.FC<QuizProps> = ({
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isLocked, isMediaPlaying, currentQuestion?.options?.length, handleSelectOption]);
+  }, [isLocked, currentQuestion?.options?.length, handleSelectOption]);
 
   if (!currentQuestion) {
     return null;
@@ -118,23 +84,12 @@ export const Quiz: React.FC<QuizProps> = ({
       {/* Progress Bar */}
       <ProgressBar current={currentIndex + 1} total={totalQuestions} />
 
-      {/* Recognition Timer */}
-      <Timer
-        timeLeft={timeLeft}
-        maxTime={10}
-        isMediaPlaying={isMediaPlaying}
-        mediaType={currentQuestion.type}
-      />
-
-      {/* Main Question Card */}
-      <div className="glass-panel rounded-3xl p-5 sm:p-7 border border-white/10 shadow-2xl relative">
+      {/* Main Question Card (Timer completely removed) */}
+      <div className="glass-panel rounded-3xl p-5 sm:p-7 border border-white/10 shadow-2xl relative mt-3">
         {/* Media Asset Renderer */}
         <MediaRenderer
           type={currentQuestion.type}
           media={currentQuestion.media}
-          onMediaReady={handleMediaReady}
-          onMediaPlayingChange={handleMediaPlayingChange}
-          onMediaFinished={handleMediaFinished}
         />
 
         {/* Question Text */}
@@ -157,7 +112,7 @@ export const Quiz: React.FC<QuizProps> = ({
                 isSelected={selectedOption === idx}
                 isCorrect={currentQuestion.mode === 'recognition' ? currentQuestion.answer === idx : undefined}
                 showResult={isLocked}
-                disabled={isLocked || isMediaPlaying}
+                disabled={isLocked}
                 onSelect={handleSelectOption}
               />
             );
@@ -171,8 +126,6 @@ export const Quiz: React.FC<QuizProps> = ({
           mode={lastAnswer.mode}
           isCorrect={lastAnswer.isCorrect}
           exposureScore={lastAnswer.exposureScore}
-          isTimeout={lastAnswer.selectedOption === null}
-          timeTaken={lastAnswer.timeTaken}
           score={lastAnswer.score}
           commentary={currentCommentary}
           onNext={onNextQuestion}

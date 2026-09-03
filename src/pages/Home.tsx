@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Play, Flame, Clock, ShieldAlert, Cpu } from 'lucide-react';
+import { Play, Flame, ShieldAlert, Cpu, Sparkles } from 'lucide-react';
 
 interface HomeProps {
   questionsCount: number;
@@ -67,16 +67,16 @@ export const Home: React.FC<HomeProps> = ({ questionsCount, onStart }) => {
         <span>or click to begin</span>
       </div>
 
-      {/* Feature teaser cards */}
+      {/* Feature teaser cards (All timer/speed text removed) */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 w-full max-w-3xl mt-12 text-left">
         <div className="glass-panel p-4 sm:p-5 rounded-2xl border border-white/5 flex flex-col gap-2 transition hover:border-brand-violet/20">
           <div className="w-8 h-8 rounded-xl bg-brand-violet/10 border border-brand-violet/20 flex items-center justify-center text-brand-violet">
-            <Clock className="w-4 h-4" />
+            <Sparkles className="w-4 h-4" />
           </div>
           <div>
-            <h2 className="text-sm font-bold text-white tracking-wide">10s Recognition Window</h2>
+            <h2 className="text-sm font-bold text-white tracking-wide">Cultural Recognition</h2>
             <p className="text-xs text-slate-400 mt-1 leading-relaxed">
-              Every second counts. Immediate recall earns up to 30 speed bonus points.
+              Test your recall of iconic internet lore, cinema moments, and viral sounds.
             </p>
           </div>
         </div>

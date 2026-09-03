@@ -10,8 +10,7 @@ export function useQuiz(questions: Question[]) {
   const [isLocked, setIsLocked] = useState<boolean>(false);
   const [currentCommentary, setCurrentCommentary] = useState<string | null>(null);
   const [lastAnswer, setLastAnswer] = useState<UserAnswer | null>(null);
-  const [isMediaReady, setIsMediaReady] = useState<boolean>(false);
-  const [isMediaPlaying, setIsMediaPlaying] = useState<boolean>(false);
+  const [quizStats, setQuizStats] = useState<QuizStats | null>(null);
 
   const currentQuestion = useMemo(() => {
     if (!questions || questions.length === 0 || currentIndex >= questions.length) {
@@ -23,21 +22,16 @@ export function useQuiz(questions: Question[]) {
   const isLastQuestion = currentIndex >= (questions?.length || 0) - 1;
 
   // Submit answer
-  const submitAnswer = useCallback((
-    selectedIndex: number | null,
-    timeTaken: number,
-    isTimeout: boolean = false
-  ) => {
+  const submitAnswer = useCallback((selectedIndex: number) => {
     if (isLocked || !currentQuestion) return;
 
     setIsLocked(true);
-    setIsMediaPlaying(false);
 
     let isCorrect: boolean | undefined = undefined;
     let exposureScore: number | undefined = undefined;
     let selectedOptionText: string | null = null;
 
-    if (selectedIndex !== null && currentQuestion.options[selectedIndex] !== undefined) {
+    if (currentQuestion.options[selectedIndex] !== undefined) {
       const option = currentQuestion.options[selectedIndex];
       selectedOptionText = getOptionText(option);
 
@@ -46,28 +40,18 @@ export function useQuiz(questions: Question[]) {
       } else {
         isCorrect = selectedIndex === currentQuestion.answer;
       }
-    } else {
-      // Timeout or unanswered
-      if (currentQuestion.mode === 'feed') {
-        exposureScore = 0;
-      } else {
-        isCorrect = false;
-      }
     }
 
-    // Calculate score
+    // Calculate score (purely non-time-based)
     const { score } = calculateQuestionScore(currentQuestion.mode, {
       isCorrect,
       exposureScore,
-      timeTaken: isTimeout ? 10.0 : timeTaken,
     });
 
     // Category and mode are strictly internal to select humorous reaction
     const commentary = getCommentary(currentQuestion.category, currentQuestion.mode, {
       isCorrect,
       exposureScore,
-      timeTaken: isTimeout ? 10.0 : timeTaken,
-      isTimeout,
     });
 
     const userAnswer: UserAnswer = {
@@ -77,25 +61,37 @@ export function useQuiz(questions: Question[]) {
       selectedOptionText,
       exposureScore,
       isCorrect,
-      timeTaken: Number(timeTaken.toFixed(2)),
       score,
       commentary,
     };
 
+    const nextAnswers = [...answers, userAnswer];
+    setAnswers(nextAnswers);
     setLastAnswer(userAnswer);
     setCurrentCommentary(commentary);
-    setAnswers(prev => [...prev, userAnswer]);
-  }, [isLocked, currentQuestion]);
 
-  // Proceed to next question
+    // If answering the final question, compute and store full stats immediately
+    // so finalStats is 100% available and contains the final question's score
+    if (currentIndex >= questions.length - 1) {
+      const computedBaseStats = calculateTotalStats(nextAnswers, questions.length);
+      const computedVerdict = getVerdict(computedBaseStats.percentage);
+      setQuizStats({
+        ...computedBaseStats,
+        verdict: computedVerdict,
+      });
+    }
+  }, [isLocked, currentQuestion, answers, currentIndex, questions.length]);
+
+  // Proceed to next question (guarded so it never overshoots the last question)
   const nextQuestion = useCallback(() => {
+    if (currentIndex >= questions.length - 1) {
+      return;
+    }
     setIsLocked(false);
     setCurrentCommentary(null);
     setLastAnswer(null);
-    setIsMediaReady(false);
-    setIsMediaPlaying(false);
     setCurrentIndex(prev => prev + 1);
-  }, []);
+  }, [currentIndex, questions.length]);
 
   // Retake quiz from question 1
   const retakeQuiz = useCallback(() => {
@@ -104,12 +100,14 @@ export function useQuiz(questions: Question[]) {
     setIsLocked(false);
     setCurrentCommentary(null);
     setLastAnswer(null);
-    setIsMediaReady(false);
-    setIsMediaPlaying(false);
+    setQuizStats(null);
   }, []);
 
-  // Compute final stats
+  // Compute final stats (falls back to calculated if quizStats is set)
   const finalStats: QuizStats = useMemo(() => {
+    if (quizStats) {
+      return quizStats;
+    }
     const totalQuestions = questions.length;
     const baseStats = calculateTotalStats(answers, totalQuestions);
     const verdict = getVerdict(baseStats.percentage);
@@ -118,7 +116,7 @@ export function useQuiz(questions: Question[]) {
       ...baseStats,
       verdict,
     };
-  }, [answers, questions.length]);
+  }, [quizStats, answers, questions.length]);
 
   return {
     currentIndex,
@@ -130,10 +128,6 @@ export function useQuiz(questions: Question[]) {
     lastAnswer,
     answers,
     finalStats,
-    isMediaReady,
-    setIsMediaReady,
-    isMediaPlaying,
-    setIsMediaPlaying,
     submitAnswer,
     nextQuestion,
     retakeQuiz,

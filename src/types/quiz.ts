@@ -21,11 +21,10 @@ export interface Question {
 export interface UserAnswer {
   questionId: number;
   mode: QuestionMode;
-  selectedOption: number | null; // null on timeout
+  selectedOption: number;
   selectedOptionText: string | null;
   exposureScore?: number; // for feed questions
   isCorrect?: boolean; // for recognition questions
-  timeTaken: number; // in seconds
   score: number; // 0 to 100
   commentary: string;
 }
@@ -48,8 +47,7 @@ export interface QuizStats {
   recognitionCorrect: number; // Correct recognition answers
   recognitionTotal: number; // Total recognition questions
   totalQuestions: number; // All questions (feed + recognition)
-  averageTime: number;
-  fastestTime: number | null;
+  feedTotal: number; // Total feed questions
   verdict: {
     title: string;
     tagline: string;

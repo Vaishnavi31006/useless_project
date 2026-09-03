@@ -125,9 +125,8 @@ export const Results: React.FC<ResultsProps> = ({ stats, onRetake }) => {
         maxScore={stats.maxScore}
         recognitionCorrect={stats.recognitionCorrect}
         recognitionTotal={stats.recognitionTotal}
+        feedTotal={stats.feedTotal}
         totalQuestions={stats.totalQuestions}
-        averageTime={stats.averageTime}
-        fastestTime={stats.fastestTime}
       />
 
       {/* Action Buttons: Retake & Share */}
