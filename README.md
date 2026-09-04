@@ -38,13 +38,13 @@ For Software:
 Screenshots (Add at least 3)
 
 
-![Screenshot1]Brainrot meter Home Page (public/screenshots/homepg.png)
+![Brainrot meter Home Page ](public/screenshots/homepg.png)
 Home page of the quiz.Click start the quiz.
 
-![Screenshot2]Screenshot of a question from the quiz.(public/screenshots/quizqn.png) 
+![Screenshot of a question from the quiz](public/screenshots/quizqn.png) 
 This shows a question from the quiz along with its options
 
-![Screenshot3]Brainrot percentage(public/screenshots/brainrotpercentage.png) 
+![Brainrot percentage](public/screenshots/brainrotpercentage.png) 
 This shows the final verdict or the brainrot percentage according to the users answers.
 
 Diagrams
