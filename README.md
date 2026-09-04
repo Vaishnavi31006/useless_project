@@ -1,3 +1,11 @@
+
+
+<img width="1280" height="640" alt="image" src="https://github.com/user-attachments/assets/c3690da8-7f08-4761-aad3-fdea5e654665" />
+
+
+
+
+
 Project Name : BRAINROT METER
 
 Basic Details
@@ -41,11 +49,16 @@ Screenshots
 ![Brainrot meter Home Page ](public/screenshots/homepg.png)
 Home page of the quiz.Click start the quiz.
 
+
+
 ![Screenshot of a question from the quiz](public/screenshots/quizqn.png) 
 This shows a question from the quiz along with its options
 
+
+
 ![Brainrot percentage](public/screenshots/brainrotpercentage.png) 
 This shows the final verdict or the brainrot percentage according to the users answers.
+
 
 Diagrams
 
