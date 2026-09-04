@@ -91,42 +91,50 @@ Workflow Diagram
 ┌─────────────┐
 │    START    │
 └──────┬──────┘
-       ↓
+       │
+       ▼
 ┌─────────────────────┐
-│ Open Brainrot Meter │
+│ Open Website &      │
+│ Start Quiz          │
 └──────────┬──────────┘
-           ↓
+           │
+           ▼
 ┌─────────────────────┐
-│    Start Quiz       │
+│ Display Question    │
+│ + Media (if any)    │
 └──────────┬──────────┘
-           ↓
+           │
+           ▼
 ┌─────────────────────┐
-│  Display Question   │
-│  + Media (if any)   │
+│ Select Answer       │
 └──────────┬──────────┘
-           ↓
+           │
+           ▼
 ┌─────────────────────┐
-│   Select Answer     │
+│ Evaluate Response   │
+│ & Assign Score      │
 └──────────┬──────────┘
-           ↓
-┌─────────────────────┐
-│ Evaluate & Score    │
-└──────────┬──────────┘
-           ↓
-      ┌─────────────┐
-      │ More        │
-      │ Questions?  │
-      └──────┬──────┘
-        Yes ↙   ↘ No
-           ↓     ↓
-   ┌────────────┐  ┌──────────────────┐
-   │ Next       │  │ Calculate Final  │
-   │ Question   │  │ Score & Verdict  │
-   └─────┬──────┘  └────────┬─────────┘
-         │                  ↓
-         └──────→     ┌─────────────┐
-                       │    END      │
-                       └─────────────┘
+           │
+           ▼
+     ┌─────────────┐
+     │    More     │
+     │ Questions?  │
+     └──────┬──────┘
+        YES │  │ NO
+            │  │
+            │  ▼
+            │ ┌──────────────────┐
+            │ │ Calculate Final  │
+            │ │ Score & Verdict  │
+            │ └────────┬─────────┘
+            │          │
+            │          ▼
+            │   ┌─────────────┐
+            │   │     END     │
+            │   └─────────────┘
+            │
+            └──────────────►
+                    Display Next Question
 
                        
 
