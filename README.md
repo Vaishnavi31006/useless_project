@@ -87,7 +87,7 @@ Diagrams
 Workflow Diagram
 
 
-
+(public/screenshots/workflow.png)
 ┌─────────────┐
 │    START    │
 └──────┬──────┘
