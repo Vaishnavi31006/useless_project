@@ -84,8 +84,54 @@ This shows the final verdict or the brainrot percentage according to the users a
 
 Diagrams
 
+Workflow Diagram
 
-Workflow: The user starts the quiz → answers internet-culture questions → the system evaluates recognition/exposure → calculates the Brainrot Score → generates a verdict → displays the final result.
+
+
+┌─────────────┐
+│    START    │
+└──────┬──────┘
+       ↓
+┌─────────────────────┐
+│ Open Brainrot Meter │
+└──────────┬──────────┘
+           ↓
+┌─────────────────────┐
+│    Start Quiz       │
+└──────────┬──────────┘
+           ↓
+┌─────────────────────┐
+│  Display Question   │
+│  + Media (if any)   │
+└──────────┬──────────┘
+           ↓
+┌─────────────────────┐
+│   Select Answer     │
+└──────────┬──────────┘
+           ↓
+┌─────────────────────┐
+│ Evaluate & Score    │
+└──────────┬──────────┘
+           ↓
+      ┌─────────────┐
+      │ More        │
+      │ Questions?  │
+      └──────┬──────┘
+        Yes ↙   ↘ No
+           ↓     ↓
+   ┌────────────┐  ┌──────────────────┐
+   │ Next       │  │ Calculate Final  │
+   │ Question   │  │ Score & Verdict  │
+   └─────┬──────┘  └────────┬─────────┘
+         │                  ↓
+         └──────→     ┌─────────────┐
+                       │    END      │
+                       └─────────────┘
+
+                       
+
+
+The workflow illustrates how Brainrot Meter takes the user from starting the quiz through answering and evaluating each question, to calculating the final Brainrot Score and generating the final verdict.
 
 Project Demo
 Video
