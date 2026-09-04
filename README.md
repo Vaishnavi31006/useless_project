@@ -41,11 +41,8 @@ Technologies/Components Used
 For Software:
 
  Languages used: TypeScript, JavaScript, HTML, CSS
- 
 - Frameworks used: React, Vite, Tailwind CSS
-- 
 - Libraries used: Lucide React, Canvas Confetti
-- 
 - Tools used: VS Code, Git, GitHub, Vercel
 
 
@@ -56,11 +53,11 @@ For Software:
 
 Installation
 
-npm install
+  npm install
 
 Run
 
-npm run dev
+  npm run dev
 
 Project Documentation
 
